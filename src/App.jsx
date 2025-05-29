@@ -1,7 +1,7 @@
 // src/App.jsx
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-//import EmployeePage from './pages/EmployeePage';
+import EmployeePage from './pages/EmployeePage';
 //import LeavePage from './pages/LeavePage';
 import ScheduleScheduling from './pages/StaffScheduling';
 import TrainingManagement from './pages/TrainingManagement';
