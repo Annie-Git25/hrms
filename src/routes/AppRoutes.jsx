@@ -1,7 +1,10 @@
 // routes/AppRoutes.jsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from '../pages/Login';
+import HomePage from '../pages/HomePage'; // Landing page
+import AdminLoginPage from '../pages/AdminLoginPage';
+import EmployeeLoginPage from '../pages/EmployeeLoginPage';
 import AdminDashboard from '../pages/AdminDashboard';
+import EmployeeDashboard from '../pages/EmployeeDashboard'; // optional
 import { useAuth } from '../context/AuthContext';
 
 function AppRoutes() {
@@ -10,11 +13,25 @@ function AppRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        {/* Landing Page */}
+        <Route path="/" element={<HomePage />} />
+
+        {/* Login Pages */}
+        <Route path="/admin-login" element={<AdminLoginPage />} />
+        <Route path="/employee-login" element={<EmployeeLoginPage />} />
+
+        {/* Protected Admin Route */}
         {user && user.role === 'admin' && (
           <Route path="/admin" element={<AdminDashboard />} />
         )}
-        {/* More protected routes */}
+
+        {/* Protected Employee Route */}
+        {user && user.role === 'employee' && (
+          <Route path="/employee" element={<EmployeeDashboard />} />
+        )}
+
+        {/* Optional fallback: redirect unknown paths */}
+        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </Router>
   );
