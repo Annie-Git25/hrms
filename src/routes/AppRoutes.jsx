@@ -5,6 +5,11 @@ import AdminLoginPage from '../pages/AdminLoginPage.jsx';
 import EmployeeLoginPage from '../pages/EmployeeLoginPage.jsx';
 import Dashboard from '../pages/Dashboard.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
+import HomePage from '../pages/HomePage'; // Landing page
+import AdminLoginPage from '../pages/AdminLoginPage';
+import EmployeeLoginPage from '../pages/EmployeeLoginPage';
+import AdminDashboard from '../pages/AdminDashboard';
+import { useAuth } from '../context/AuthContext';
 
 function AppRoutes() {
   const { user } = useAuth();
