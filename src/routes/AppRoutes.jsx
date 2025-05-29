@@ -4,7 +4,6 @@ import HomePage from '../pages/HomePage'; // Landing page
 import AdminLoginPage from '../pages/AdminLoginPage';
 import EmployeeLoginPage from '../pages/EmployeeLoginPage';
 import AdminDashboard from '../pages/AdminDashboard';
-import EmployeeDashboard from '../pages/EmployeeDashboard'; // optional
 import { useAuth } from '../context/AuthContext';
 
 function AppRoutes() {
