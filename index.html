@@ -97,6 +97,23 @@
                                 </button>
                             </div>
                         </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Login as:</label>
+                            <div class="flex items-center space-x-4">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="login-role" value="employee" class="form-radio text-blue-600 h-4 w-4" checked>
+                                    <span class="ml-2 text-gray-700">Employee</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="login-role" value="admin_hr" class="form-radio text-blue-600 h-4 w-4">
+                                    <span class="ml-2 text-gray-700">HR/Admin</span>
+                                </label>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">
+                                (Your actual role will be verified from the database.)
+                            </p>
+                        </div>
                         <button
                             type="submit"
                             id="login-button"
@@ -219,15 +236,15 @@
                 <nav class="flex-1 px-4 overflow-y-auto">
                     <ul>
                         <li class="mb-2"><button data-page="dashboard" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200 active-nav-link"><i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i><span>Dashboard</span></button></li>
-                        <li class="mb-2"><button data-page="employee-management" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-users w-5 h-5 mr-3"></i><span>Employee Management</span></button></li>
-                        <li class="mb-2"><button data-page="leave-management" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-calendar-alt w-5 h-5 mr-3"></i><span>Leave Management</span></button></li>
-                        <li class="mb-2"><button data-page="scheduling" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-calendar-check w-5 h-5 mr-3"></i><span>Staff Scheduling</span></button></li>
-                        <li class="mb-2"><button data-page="training" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-graduation-cap w-5 h-5 mr-3"></i><span>Employee Training</span></button></li>
-                        <li class="mb-2"><button data-page="performance" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-chart-line w-5 h-5 mr-3"></i><span>Employee Performance</span></button></li>
-                        <li class="mb-2"><button data-page="ranking" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-trophy w-5 h-5 mr-3"></i><span>Ranking & Recognition</span></button></li>
+                        <li class="mb-2 admin-hr-link hidden"><button data-page="employee-management" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-users w-5 h-5 mr-3"></i><span>Employee Management</span></button></li>
+                        <li class="mb-2 admin-hr-link hidden"><button data-page="leave-management" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-calendar-alt w-5 h-5 mr-3"></i><span>Leave Management</span></button></li>
+                        <li class="mb-2 admin-hr-link hidden"><button data-page="scheduling" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-calendar-check w-5 h-5 mr-3"></i><span>Staff Scheduling</span></button></li>
+                        <li class="mb-2 admin-hr-link hidden"><button data-page="training" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-graduation-cap w-5 h-5 mr-3"></i><span>Employee Training</span></button></li>
+                        <li class="mb-2 admin-hr-link hidden"><button data-page="performance" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-chart-line w-5 h-5 mr-3"></i><span>Employee Performance</span></button></li>
+                        <li class="mb-2 admin-hr-link hidden"><button data-page="ranking" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-trophy w-5 h-5 mr-3"></i><span>Ranking & Recognition</span></button></li>
                         <li class="mb-2 border-t border-gray-700 pt-4 mt-4"></li>
                         <li class="mb-2"><button data-page="profile" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-user-circle w-5 h-5 mr-3"></i><span>Profile</span></button></li>
-                        <li class="mb-2"><button data-page="settings" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-cogs w-5 h-5 mr-3"></i><span>Settings</span></button></li>
+                        <li class="mb-2 admin-hr-link hidden"><button data-page="settings" class="nav-link flex items-center w-full py-2 px-3 rounded-lg text-left transition duration-200"><i class="fas fa-cogs w-5 h-5 mr-3"></i><span>Settings</span></button></li>
                     </ul>
                 </nav>
                 <div class="p-4 border-t border-gray-700">
@@ -387,6 +404,7 @@
         const loginForm = document.getElementById('login-form');
         const loginEmailInput = document.getElementById('login-email');
         const loginPasswordInput = document.getElementById('login-password');
+        const loginRoleRadios = document.querySelectorAll('input[name="login-role"]'); // NEW
         const loginButton = document.getElementById('login-button');
         const loginButtonText = document.getElementById('login-button-text');
         const loginSpinner = document.getElementById('login-spinner');
@@ -421,8 +439,11 @@
         const sidebarProfilePosition = document.getElementById('sidebar-profile-position');
         const sidebarProfileAvatar = document.getElementById('sidebar-profile-avatar');
 
+        const adminHrLinks = document.querySelectorAll('.admin-hr-link'); // NEW
+
         let isSidebarOpen = window.innerWidth >= 768; // Sidebar starts open on desktop
         let currentAuthenticatedUser = null; // To store the Supabase user object
+        let currentUserRole = 'employee'; // Default role, will be updated from DB // NEW
 
         // --- Helper Functions ---
 
@@ -477,6 +498,7 @@
 
             const email = loginEmailInput.value;
             const password = loginPasswordInput.value;
+            // const selectedRoleType = document.querySelector('input[name="login-role"]:checked').value; // Get selected role hint // NEW
 
             try {
                 const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -486,7 +508,7 @@
                 console.log("Login successful:", currentAuthenticatedUser);
                 showMessage(loginErrorMessage, "Login successful!", false);
 
-                // Fetch employee details or create if not exists
+                // Fetch employee details and their actual role
                 await ensureEmployeeRecord(currentAuthenticatedUser);
 
                 // Transition to main HRMS layout
@@ -523,15 +545,12 @@
                 console.log("Registration successful:", currentAuthenticatedUser);
                 showMessage(registerErrorMessage, "Registration successful! Please check your email to confirm your account and then log in.", false);
 
-                // Immediately create an employee record for the new user
+                // Immediately create an employee record for the new user (default role: 'employee')
                 await createEmployeeRecordForNewUser(currentAuthenticatedUser);
 
-                // After registration, typically you'd wait for email confirmation.
-                // For this demo, we'll switch to login form after a short delay.
                 setTimeout(() => {
                     showAuthForm('login');
                     hideMessage(registerErrorMessage);
-                    // Clear registration form fields
                     registerEmailInput.value = '';
                     registerPasswordInput.value = '';
                     confirmPasswordInput.value = '';
@@ -550,6 +569,7 @@
                 if (error) throw error;
                 console.log("Logged out successfully.");
                 currentAuthenticatedUser = null; // Clear user state
+                currentUserRole = 'employee'; // Reset role // NEW
                 showMessage(loginErrorMessage, "Logged out successfully!", false); // Show message on login page
                 showLandingPage(); // Go back to landing page
             } catch (error) {
@@ -580,10 +600,9 @@
             if (!user) return;
 
             try {
-                // Check if an employee record already exists for this user_id
                 const { data, error } = await supabase
                     .from('employees')
-                    .select('*')
+                    .select('*, position:positions("title"), department:departments("name")') // Fetch position and department titles
                     .eq('user_id', user.id)
                     .single();
 
@@ -593,14 +612,15 @@
 
                 if (data) {
                     console.log("Employee record found:", data);
+                    currentUserRole = data.role; // Set the global role // NEW
                     updateSidebarProfile(data); // Update UI with fetched employee data
                 } else {
                     console.log("No employee record found for user. Creating one...");
                     await createEmployeeRecordForNewUser(user);
                 }
+                updateUIAccessByRole(); // Update UI after role is set // NEW
             } catch (error) {
                 console.error("Error ensuring employee record:", error.message);
-                // Handle error (e.g., show a message to the user)
             }
         }
 
@@ -608,7 +628,6 @@
             if (!user) return;
 
             try {
-                // Extract first and last name from email if possible, or use defaults
                 const [firstNamePart, lastNamePart] = user.email.split('@')[0].split('.');
                 const firstName = firstNamePart ? firstNamePart.charAt(0).toUpperCase() + firstNamePart.slice(1) : 'New';
                 const lastName = lastNamePart ? lastNamePart.charAt(0).toUpperCase() + lastNamePart.slice(1) : 'User';
@@ -621,54 +640,52 @@
                             email: user.email,
                             "firstName": firstName,
                             "lastName": lastName,
-                            "hireDate": new Date().toISOString().split('T')[0], // Current date
+                            "hireDate": new Date().toISOString().split('T')[0],
                             status: 'Active',
-                            // You might want to add default positionID/departmentID here
+                            role: 'employee', // Default role for new registrations // NEW
                         }
                     ])
                     .select()
-                    .single(); // Use .single() if you expect one record back
+                    .single();
 
                 if (error) throw error;
                 console.log("New employee record created:", data);
+                currentUserRole = data.role; // Set the global role // NEW
                 updateSidebarProfile(data); // Update UI with new employee data
             } catch (error) {
                 console.error("Error creating employee record:", error.message);
-                // Handle error (e.g., alert user, log to console)
             }
         }
 
 
         async function fetchEmployeesForTable() {
+            // Only fetch if the user has admin/hr role
+            if (currentUserRole !== 'admin' && currentUserRole !== 'hr') {
+                console.log("Unauthorized to view all employees.");
+                renderEmployeeTable([]); // Clear table if not authorized
+                return;
+            }
+
             try {
-                // Fetch all employees. RLS policies will ensure only authorized data is returned.
                 const { data, error } = await supabase
                     .from('employees')
-                    .select('"employeeID", "firstName", "lastName", email, status, "positionID", "departmentID"'); // Select specific columns
+                    .select('"employeeID", "firstName", "lastName", email, status, position:positions("title"), department:departments("name")'); // Select specific columns and join for titles/names
 
                 if (error) throw error;
 
-                // For the table, we need position title and department name.
-                // This would ideally be done with a JOIN in a FastAPI backend.
-                // For direct Supabase client, we'll fetch them separately or rely on pre-populated data.
-                // For simplicity, let's just use email as name and status.
-                // You'll need to fetch positions and departments separately if you want to display their names.
-
-                // Mocking position and department for display purposes for now
                 const employeesWithDisplayInfo = data.map(emp => ({
                     id: emp.employeeID,
                     name: `${emp.firstName} ${emp.lastName}`,
-                    title: 'N/A', // You'd fetch this from positions table
-                    department: 'N/A', // You'd fetch this from departments table
+                    title: emp.position ? emp.position.title : 'N/A', // Use fetched position title
+                    department: emp.department ? emp.department.name : 'N/A', // Use fetched department name
                     status: emp.status
                 }));
 
-                // Apply current filters and search
                 const filterDepartment = document.getElementById('department-filter').value;
                 const searchTerm = document.getElementById('employee-search').value.toLowerCase();
 
                 const filteredAndSearched = employeesWithDisplayInfo.filter(employee => {
-                    const matchesDepartment = filterDepartment ? employee.department === filterDepartment : true;
+                    const matchesDepartment = filterDepartment ? employee.department.toLowerCase() === filterDepartment.toLowerCase() : true;
                     const matchesSearch = searchTerm ?
                         employee.name.toLowerCase().includes(searchTerm) ||
                         employee.title.toLowerCase().includes(searchTerm) ||
@@ -676,13 +693,11 @@
                     return matchesDepartment && matchesSearch;
                 });
 
-                // Sort by name for consistent pagination
-                filteredAndSearachedEmployees = filteredAndSearched.sort((a, b) => a.name.localeCompare(b.name));
-
-                updateEmployeeTable(); // Re-render table with filtered data
+                filteredAndSearchedEmployees = filteredAndSearched.sort((a, b) => a.name.localeCompare(b.name));
+                updateEmployeeTable();
             } catch (error) {
                 console.error("Error fetching employees for table:", error.message);
-                renderEmployeeTable([]); // Render empty table on error
+                renderEmployeeTable([]);
             }
         }
 
@@ -692,8 +707,7 @@
         function updateSidebarProfile(employeeData) {
             if (employeeData) {
                 sidebarProfileName.textContent = `${employeeData.firstName || ''} ${employeeData.lastName || ''}`;
-                // You'd fetch the actual position title from the positions table
-                sidebarProfilePosition.textContent = employeeData.position || 'Employee'; // Placeholder
+                sidebarProfilePosition.textContent = employeeData.position ? employeeData.position.title : 'Employee'; // Use fetched position title
                 // sidebarProfileAvatar.src = employeeData.avatar_url || 'https://placehold.co/60x60/ADD8E6/000000?text=HR';
             } else {
                 sidebarProfileName.textContent = 'Guest';
@@ -702,10 +716,28 @@
             }
         }
 
+        // NEW: Function to dynamically show/hide UI elements based on role
+        function updateUIAccessByRole() {
+            if (currentUserRole === 'admin' || currentUserRole === 'hr') {
+                adminHrLinks.forEach(link => link.classList.remove('hidden'));
+                // Example: make Employee Management the default for admins
+                // showPage('employee-management');
+            } else { // 'employee' role
+                adminHrLinks.forEach(link => link.classList.add('hidden'));
+                // Example: make Dashboard the default for employees
+                // showPage('dashboard');
+            }
+            // Ensure the currently active page is still visible or switch to a default if hidden by role change
+            const currentPage = document.querySelector('.page-content.active');
+            if (currentPage && currentPage.classList.contains('hidden')) {
+                showPage('dashboard'); // Fallback to dashboard if current page is hidden
+            }
+        }
+
         function showHRMSLayout() {
             landingPage.classList.add('hidden');
             hrmsMainLayout.classList.remove('hidden');
-            // Ensure sidebar and main content positioning is correct on login
+
             if (window.innerWidth >= 768) {
                 sidebar.classList.remove('-translate-x-full');
                 mainContent.classList.add('md:ml-64');
@@ -717,16 +749,19 @@
                 topBanner.classList.remove('md:pl-64');
                 isSidebarOpen = false;
             }
-            showPage('dashboard'); // Default to dashboard after login
-            // Fetch and update employee table data when HRMS layout is shown
-            fetchEmployeesForTable();
+            // Now that role is set, update UI access
+            updateUIAccessByRole();
+            // Default to dashboard after login, ensuring it's accessible based on role
+            showPage('dashboard');
+            fetchEmployeesForTable(); // Fetch and update employee table data
         }
 
         function showLandingPage() {
             hrmsMainLayout.classList.add('hidden');
             landingPage.classList.remove('hidden');
-            showAuthForm('login'); // Always revert to login form on landing page
+            showAuthForm('login');
             updateSidebarProfile(null); // Clear sidebar profile
+            adminHrLinks.forEach(link => link.classList.add('hidden')); // Hide admin links on logout
         }
 
         function toggleSidebar() {
@@ -749,9 +784,16 @@
             });
             const targetPage = document.getElementById(pageId + '-page');
             if (targetPage) {
-                targetPage.classList.remove('hidden');
-                targetPage.classList.add('active');
-                // Update page title in top banner
+                // Ensure the target page is actually visible to the current role
+                if (targetPage.classList.contains('admin-hr-link') && (currentUserRole === 'employee')) {
+                     // If an employee tries to access an admin page, redirect to dashboard
+                     pageId = 'dashboard';
+                     document.getElementById('dashboard-page').classList.remove('hidden');
+                     document.getElementById('dashboard-page').classList.add('active');
+                } else {
+                    targetPage.classList.remove('hidden');
+                    targetPage.classList.add('active');
+                }
                 pageTitleElement.textContent = pageId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
             }
             // Update active class on sidebar links
@@ -835,7 +877,6 @@
 
         // --- Event Listeners ---
         document.addEventListener('DOMContentLoaded', async () => {
-            // Check initial auth state
             try {
                 const { data: { session }, error } = await supabase.auth.getSession();
                 if (error) throw error;
@@ -843,7 +884,7 @@
                 if (session) {
                     currentAuthenticatedUser = session.user;
                     console.log("User already logged in:", currentAuthenticatedUser);
-                    await ensureEmployeeRecord(currentAuthenticatedUser); // Fetch/create employee record
+                    await ensureEmployeeRecord(currentAuthenticatedUser);
                     showHRMSLayout();
                 } else {
                     console.log("No active session, showing landing page.");
@@ -851,26 +892,21 @@
                 }
             } catch (error) {
                 console.error("Error checking initial session:", error.message);
-                showLandingPage(); // Fallback to landing page on error
+                showLandingPage();
             }
 
-            // Auth form switching
             showRegisterFormBtn.addEventListener('click', () => showAuthForm('register'));
             showLoginFormBtn.addEventListener('click', () => showAuthForm('login'));
 
-            // Password visibility toggles
             toggleLoginPassword.addEventListener('click', () => togglePasswordVisibility(loginPasswordInput, toggleLoginPassword));
             toggleRegisterPassword.addEventListener('click', () => togglePasswordVisibility(registerPasswordInput, toggleRegisterPassword));
             toggleConfirmPassword.addEventListener('click', () => togglePasswordVisibility(confirmPasswordInput, toggleConfirmPassword));
 
-            // Form submissions
             loginForm.addEventListener('submit', handleLogin);
             registerForm.addEventListener('submit', handleRegister);
 
-            // Sidebar toggle
             sidebarToggleBtn.addEventListener('click', toggleSidebar);
 
-            // Close sidebar on small screens when a nav item is clicked
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth < 768) {
@@ -879,7 +915,6 @@
                 });
             });
 
-            // Adjust sidebar based on window resize
             window.addEventListener('resize', () => {
                 if (window.innerWidth >= 768) {
                     sidebar.classList.remove('-translate-x-full');
@@ -897,23 +932,20 @@
                 }
             });
 
-            // Page navigation
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const page = link.dataset.page;
                     showPage(page);
-                    // For employee management, update table when its page is active
                     if (page === 'employee-management') {
-                        currentEmployeePage = 1; // Reset to first page
-                        fetchEmployeesForTable(); // Re-fetch and update table
+                        currentEmployeePage = 1;
+                        fetchEmployeesForTable();
                     }
                 });
             });
 
-            // Notifications Dropdown Logic
             notificationsButton.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent click from bubbling to document
+                e.stopPropagation();
                 notificationsDropdown.classList.toggle('hidden');
                 if (!notificationsDropdown.classList.contains('hidden')) {
                     notificationsDropdown.classList.add('animate-fade-in-down');
@@ -922,28 +954,24 @@
                 }
             });
 
-            // Close dropdown if clicked outside
             document.addEventListener('click', (e) => {
                 if (!notificationsButton.contains(e.target) && !notificationsDropdown.contains(e.target)) {
                     notificationsDropdown.classList.add('hidden');
                 }
             });
 
-            // Logout button
             logoutButton.addEventListener('click', handleLogout);
 
-            // Employee Management page filters/search
             document.getElementById('department-filter').addEventListener('change', () => {
                 currentEmployeePage = 1;
-                fetchEmployeesForTable(); // Re-fetch with new filter
+                fetchEmployeesForTable();
             });
             document.getElementById('employee-search').addEventListener('input', () => {
                 currentEmployeePage = 1;
-                fetchEmployeesForTable(); // Re-fetch with new search term
+                fetchEmployeesForTable();
             });
         });
 
-        // Listen for auth state changes from Supabase (optional, but good for real-time UI updates)
         supabase.auth.onAuthStateChange(async (event, session) => {
             console.log(`Supabase auth event: ${event}`, session);
             if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
@@ -956,6 +984,7 @@
             } else if (event === 'SIGNED_OUT') {
                 console.log('User logged out');
                 currentAuthenticatedUser = null;
+                currentUserRole = 'employee'; // Reset role on sign out
                 if (!hrmsMainLayout.classList.contains('hidden')) {
                     showLandingPage();
                 }
