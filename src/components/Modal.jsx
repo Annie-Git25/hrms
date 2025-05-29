@@ -12,3 +12,4 @@ function Modal({ title, children, isOpen, onClose }) {
     </div>
   );
 }
+export default Modal;
