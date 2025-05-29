@@ -1,11 +1,10 @@
 // routes/AppRoutes.jsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from '../pages/HomePage'; // Landing page
-import AdminLoginPage from '../pages/AdminLoginPage';
-import EmployeeLoginPage from '../pages/EmployeeLoginPage';
-import AdminDashboard from '../pages/AdminDashboard';
-import EmployeeDashboard from '../pages/EmployeeDashboard'; // optional
-import { useAuth } from '../context/AuthContext';
+import HomePage from '../pages/HomePage.jsx'; // Landing page
+import AdminLoginPage from '../pages/AdminLoginPage.jsx';
+import EmployeeLoginPage from '../pages/EmployeeLoginPage.jsx';
+import Dashboard from '../pages/Dashboard.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function AppRoutes() {
   const { user } = useAuth();
